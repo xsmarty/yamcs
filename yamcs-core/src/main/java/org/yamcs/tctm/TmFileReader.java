@@ -138,8 +138,8 @@ public class TmFileReader  {
 			//System.out.println("packet received at "+TimeEncoding.toCombinedFormat(pwrt.rectime));
 			CcsdsPacket c=new CcsdsPacket(pwrt.getPacket());
 			//System.out.println(c.toString());
-			System.out.println("rectime: "+TimeEncoding.toString(pwrt.rectime)+" apid:" +c.getAPID()+" seq: "+c.getSequenceCount()+" coarse: "+c.getCoarseTime()+" fine: "+c.getFineTime()+
-					" time: "+ TimeEncoding.toCombinedFormat(c.getInstant())+" received: "+TimeEncoding.toCombinedFormat(pwrt.rectime)+" delta: "+(pwrt.rectime-c.getInstant()));
+			System.out.println("rectime: "+TimeEncoding.toString(pwrt.getReceptionTime())+" apid:" +c.getAPID()+" seq: "+c.getSequenceCount()+" coarse: "+c.getCoarseTime()+" fine: "+c.getFineTime()+
+					" time: "+ TimeEncoding.toCombinedFormat(c.getInstant())+" received: "+TimeEncoding.toCombinedFormat(pwrt.getReceptionTime())+" delta: "+(pwrt.getReceptionTime()-c.getInstant()));
 
 		}
 	}

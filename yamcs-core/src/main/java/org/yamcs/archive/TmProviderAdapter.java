@@ -98,7 +98,7 @@ public class TmProviderAdapter extends AbstractService {
 					long time= pwrt.getGenerationTime();
 					byte[] pkt = pwrt.getPacket();
 					int apidSeqCount = ByteBuffer.wrap(pkt).getInt(0);
-					Tuple t=new Tuple(TM_TUPLE_DEFINITION, new Object[] {time, apidSeqCount, pwrt.rectime, pkt });
+					Tuple t=new Tuple(TM_TUPLE_DEFINITION, new Object[] {time, apidSeqCount, pwrt.getReceptionTime(), pkt });
 					stream.emitTuple(t);
 				}
 

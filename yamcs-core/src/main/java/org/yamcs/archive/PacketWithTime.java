@@ -1,7 +1,16 @@
 package org.yamcs.archive;
 
-public class PacketWithTime {
-    public long rectime;//reception time
+/**
+ * packet with recording and generation time
+ * The packet is just a byte array.
+ * 
+ * It implements comparable based on generation time
+ * 
+ * @author mache
+ *
+ */
+public class PacketWithTime implements Comparable<PacketWithTime>{
+    private long rectime;//reception time
     private long gentime; //generation time
     private byte[] pkt;
 
@@ -15,7 +24,18 @@ public class PacketWithTime {
         return gentime;
     }
     
+    public long getReceptionTime() {
+        return rectime;
+    }
+    
     public byte[] getPacket() {
         return pkt;
     }
+
+	@Override
+	public int compareTo(PacketWithTime p) {
+		return Long.compare(this.gentime, p.gentime);
+	}
+    
+    
 }
