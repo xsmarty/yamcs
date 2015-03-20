@@ -14,7 +14,8 @@ before_script:
  - wget https://gflags.googlecode.com/files/libgflags-dev_2.0-1_amd64.deb
  - sudo dpkg -i libgflags-dev_2.0-1_amd64.deb
  - git clone --depth 1 https://github.com/xpromache/rocksdb.git 
- - cd rocksdb && OPT=-DTRAVIS V=1 make rocksdbjava && sudo make install
+ - cd rocksdb && OPT=-DTRAVIS V=1 make rocksdbjava && sudo make install && cd ..
+
 script: mvn test
 
 
