@@ -15,7 +15,7 @@ before_script:
  - wget https://gflags.googlecode.com/files/libgflags-dev_2.0-1_amd64.deb
  - sudo dpkg -i libgflags-dev_2.0-1_amd64.deb
  - git clone --depth 1 https://github.com/xpromache/rocksdb.git 
- - cd rocksdb && OPT=-DTRAVIS V=1 make rocksdbjava && sudo make install && cd ..
+ - cd rocksdb && OPT=-DTRAVIS V=1 make rocksdbjava && sudo make install && sudo cp ./java/target/librocksdbjni-linux64.so /usr/local/lib/ && cd ..
 #tokyocabinets
  - sudo apt-get install libtokyocabinet-dev
  - wget http://fallabs.com/tokyocabinet/javapkg/tokyocabinet-java-1.24.tar.gz
