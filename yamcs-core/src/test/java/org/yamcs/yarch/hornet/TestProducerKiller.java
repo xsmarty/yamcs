@@ -36,7 +36,7 @@ public class TestProducerKiller {
         dataClient.dataConsumer.setMessageHandler(new MessageHandler() {
             @Override
             public void onMessage(ClientMessage msg) {
-                System.out.println(Thread.currentThread()+" received the first message: "+msg+", closing connection");
+            //    System.out.println(Thread.currentThread()+" received the first message: "+msg+", closing connection");
                 NettyConnection nc=(NettyConnection)((DelegatingSession)ys.session).getConnection().getTransportConnection();
                 nc.close();
             }
