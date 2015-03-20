@@ -22,6 +22,6 @@ before_script:
  - tar xzvf tokyocabinet-java-1.24.tar.gz
  - cd tokyocabinet-java-1.24 && ./configure && make && sudo make install && cd ..
 
-script: mvn test
+script: mvn -Dsurefire.useFile=false test
 
 
