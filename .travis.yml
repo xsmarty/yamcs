@@ -17,7 +17,7 @@ before_script:
  - git clone --depth 1 https://github.com/xpromache/rocksdb.git 
  - cd rocksdb && OPT=-DTRAVIS V=1 make rocksdbjava && sudo make install && cd ..
 #tokyocabinets
- - apt-get install libtokyocabinet-dev
+ - sudo apt-get install libtokyocabinet-dev
  - wget http://fallabs.com/tokyocabinet/javapkg/tokyocabinet-java-1.24.tar.gz
  - tar xzvf tokyocabinet-java-1.24.tar.gz
  - cd tokyocabinet-java-1.24 && make && sudo make install && cd ..
