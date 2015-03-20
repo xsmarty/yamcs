@@ -28,7 +28,11 @@ public class TestProducerKiller {
         hornetServer.setSecurityManager( new HornetQAuthManager() );
         hornetServer.start();
     }
-
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+        hornetServer.stop();
+    }
+    
     @Test
     public void testProducerKiller() throws Exception{
         final YamcsSession ys=YamcsSession.newBuilder().setConnectionParams("localhost", 15445).build();
@@ -67,10 +71,5 @@ public class TestProducerKiller {
         t.start();
         t.join(10*60*1000);
         assertFalse(t.isAlive());
-    }
-
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
-        hornetServer.stop();
     }
 }
