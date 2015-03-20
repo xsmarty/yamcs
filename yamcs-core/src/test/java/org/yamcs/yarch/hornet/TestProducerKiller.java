@@ -71,5 +71,7 @@ public class TestProducerKiller {
         t.start();
         t.join(10*60*1000);
         assertFalse(t.isAlive());
+        ys1.close();
+        ys.close();
     }
 }
