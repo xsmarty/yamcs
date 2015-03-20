@@ -42,8 +42,8 @@ public class ChannelsTest {
     
     @AfterClass
     public static void afterClass() throws Exception {
-        hornetServer.stop();
         ManagementService.getInstance().shutdown();
+	YamcsServer.stopHornet();
     }
     
     @Test
