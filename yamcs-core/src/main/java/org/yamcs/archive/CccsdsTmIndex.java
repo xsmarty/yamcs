@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yamcs.ConfigurationException;
@@ -14,10 +15,9 @@ import org.yamcs.YConfiguration;
 import org.yamcs.yarch.Stream;
 import org.yamcs.yarch.Tuple;
 import org.yamcs.yarch.YarchDatabase;
-import org.yamcs.yarch.tokyocabinet.TCBFactory;
-import org.yamcs.yarch.tokyocabinet.YBDB;
-import org.yamcs.yarch.tokyocabinet.YBDBCUR;
-
+import org.yamcs.yarch.rocksdb.NoColumnSerializer;
+import org.yamcs.yarch.rocksdb.RDBFactory;
+import org.yamcs.yarch.rocksdb.YRDB;
 import org.yamcs.utils.TimeEncoding;
 import org.yamcs.protobuf.Yamcs.ArchiveRecord;
 import org.yamcs.protobuf.Yamcs.NamedObjectId;
@@ -26,7 +26,8 @@ import org.yamcs.utils.CcsdsPacket;
 import tokyocabinet.BDBCUR;
 
 /**
- * Completeness index of CCSDS telemetry. There is one tcb table:
+ * Completeness index of CCSDS telemetry implemented on top of RocksDB.
+ * There is one rdb database:
  *   key: apid[2bytes], start time[8 bytes]
  *   value: end time[8bytes], start seq count[2 bytes], end seq count[2 bytes], num packets [4 bytes]
  *   
@@ -42,7 +43,7 @@ public class CccsdsTmIndex implements TmIndex {
 	
 	static long maxApidInterval=3600*1000; //if time between two packets with the same apid is more than one hour, make two records even if they packets are in sequence (because maybe there is a wrap around involved)
 	private boolean closed=false;
-	private YBDB db;
+	private YRDB db;
 	private YBDBCUR cursor;
 	private long lastSync;
 	
@@ -58,10 +59,9 @@ public class CccsdsTmIndex implements TmIndex {
 	    
         YarchDatabase ydb=YarchDatabase.getInstance(instance);
 	    
-	    db=new YBDB();
-		String filename=ydb.getRoot()+"/tmindex.bdb";
-		db=ydb.getTCBFactory().getTcb(filename, false, readonly);
-		log.info("opened "+filename+" with "+db.rnum()+" records");
+		String dirname=ydb.getRoot()+"/ccsds-tmindex";
+		db=RDBFactory.getInstance(instance).getRdb(dirname, new NoColumnSerializer(), readonly);
+		log.info("opened "+dirname+" with "+db.rnum()+" records");
 		if(db.rnum()==0) initDbs();
 		cursor=db.openCursor();
 		lastSync=System.currentTimeMillis();
