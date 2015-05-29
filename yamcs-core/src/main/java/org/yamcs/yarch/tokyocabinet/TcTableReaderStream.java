@@ -65,7 +65,7 @@ public class TcTableReaderStream extends AbstractTableReaderStream implements Ru
         
         log.debug("running partitions "+partitions);
         PriorityQueue<TcRawTuple> orderedQueue=new PriorityQueue<TcRawTuple>();
-        TCBFactory tcbf=ydb.getTCBFactory();
+        TCBFactory tcbf = TCBFactory.getInstance();
         try {
             int i=0;
             //first open all the partitions and collect a tuple from each

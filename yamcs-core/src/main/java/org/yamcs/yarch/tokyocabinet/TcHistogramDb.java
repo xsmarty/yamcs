@@ -88,7 +88,7 @@ public class TcHistogramDb extends HistogramDb {
     private synchronized YBDB getDb(String columnName, boolean readonly) throws IOException {
 	YBDB histoDb = histoDbs.get(columnName); 
 	if(histoDb==null) {
-	    histoDb = ydb.getTCBFactory().getTcb(basename+"#"+columnName+".tcb", readonly, false);
+	    histoDb = TCBFactory.getInstance().getTcb(basename+"#"+columnName+".tcb", readonly, false);
 	    if(histoDb.rnum()==0) {
 		if(readonly) throw new IOException("readonly specified but the index database is not even initialized");
 		initDb(histoDb);
